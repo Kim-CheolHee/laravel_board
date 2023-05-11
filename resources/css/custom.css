@@ -1,0 +1,11 @@
+.bg-red-300-important {
+    background-color: #FECACA !important;
+  }
+
+  .text-red-800-important {
+    color: #991B1B !important;
+  }
+
+  .hover\:bg-red-400-important:hover {
+    background-color: #FCA5A5 !important;
+  }
