@@ -52,6 +52,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'attachment' => 'file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
         ]);
 
         $post = new Post([
@@ -59,6 +60,13 @@ class PostController extends Controller
             'content' => $request->input('content'),
             'user_id' => auth()->user()->id,
         ]);
+
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $attachmentName = time() . '-' . $attachment->getClientOriginalName();
+            $attachment->storeAs('public/attachments', $attachmentName);
+            $post->attachment = $attachmentName;
+        }
 
         $bulletinBoard->posts()->save($post);
 
@@ -77,11 +85,6 @@ class PostController extends Controller
         $currentPage = $request->query('page', 1);
         return view('posts.show', compact('post', 'currentPage'));
     }
-    // public function show(BulletinBoard $bulletinBoard, Post $post)
-    // {
-    //     $post->load('user');
-    //     return view('posts.show', compact('post'));
-    // }
 
     /**
      * Show the form for editing the specified resource.

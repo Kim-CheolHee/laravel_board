@@ -12,7 +12,7 @@
     <div class="container mx-auto p-4">
         <h1 class="text-center text-4xl font-bold mb-6">Create post</h1>
 
-        <form action="{{ route('posts.store', ['bulletinBoard' => $bulletinBoard->id]) }}" method="POST">
+        <form action="{{ route('posts.store', ['bulletinBoard' => $bulletinBoard->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-4 border border-black p-4">
@@ -27,6 +27,11 @@
             <div class="mb-4 border border-black p-4">
                 <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
                 <textarea name="content" id="content" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus: shadow-outline" required></textarea>
+            </div>
+
+            <div class="mb-4 border border-black p-4">
+                <label for="attachment" class="block text-gray-700 text-sm font-bold mb-2">Attachment (optional):</label>
+                <input type="file" name="attachment" id="attachment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
 
             <div class="mb-4">

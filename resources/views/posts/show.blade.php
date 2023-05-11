@@ -6,11 +6,18 @@
           <h1 class="text-3xl font-bold mb-2">{{ $post->title }}</h1>
           <hr class="border-t border-gray-300 my-4">
           <p class="text-lg mb-4">{{ $post->content }}</p>
+
           <div class="mb-4">
-              @if ($post->published_at)
-              <span class="text-gray-600">Published on: {{ \Carbon\Carbon::parse($post->published_at)->format('M d, Y') }}</span>
+              @if ($post->attachment)
+                <span class="text-gray-600">Attachment: <a href="{{ asset('storage/attachments/' . $post->attachment) }}" target="_blank">{{ $post->attachment }}</a></span>
               @else
-              <span class="text-gray-600">Published on: N/A</span>
+                <span class="text-gray-600">Attachment: N/A</span>
+              @endif
+            <br>
+              @if ($post->published_at)
+                <span class="text-gray-600">Published on: {{ \Carbon\Carbon::parse($post->published_at)->format('M d, Y') }}</span>
+              @else
+                <span class="text-gray-600">Published on: N/A</span>
               @endif
           </div>
           <div class="text-center mt-4">
