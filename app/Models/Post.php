@@ -14,6 +14,11 @@ class Post extends Model
         'content',
         'user_id',
         'attachment',
+        'published_at',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     public function user()

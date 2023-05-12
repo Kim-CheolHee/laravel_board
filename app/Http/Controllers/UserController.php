@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -48,11 +50,13 @@ class UserController extends Controller
         $user->email = $request->email;
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('public/photos');
-            $user->photo = $path;
+            $path = $request->file('photo')->store('photos', 'public');
+            $user->photo = basename($path);
+            Log::info('Photo path: ' . $path);
         }
 
         $user->save();
+        Log::info('User saved: ' . $user);
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
@@ -63,9 +67,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($email)
     {
-        $user = User::findOrFail($id);
+        $email = urldecode($email);
+        $user = User::where('email', $email)->firstOrFail();
         return view('users.show', compact('user'));
     }
 
@@ -75,9 +80,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($email)
     {
-        return view('users.edit');
+        $email = urldecode($email);
+        $user = User::where('email', $email)->firstOrFail();
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -87,9 +94,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $email)
     {
-        return view('users.update');
+        $email = urldecode($email);
+        $user = User::where('email', $email)->firstOrFail();
+
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('users.show', $user)->with('success', 'Password updated successfully');
     }
 
     /**

@@ -25,6 +25,7 @@ class User extends Authenticatable implements AuthenticatableContract
         'name',
         'email',
         'password',
+        'photo',
     ];
 
     /**
@@ -47,7 +48,7 @@ class User extends Authenticatable implements AuthenticatableContract
     ];
     public function posts()
     {
-        return $this->hasMany(Post::class, 'user_email', 'email');
+        return $this->hasMany(Post::class);
     }
 
     public function attachments()

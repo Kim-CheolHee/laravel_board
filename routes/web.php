@@ -33,11 +33,8 @@ Route::resource('bulletin-board', BulletinBoardController::class)->names('bullet
 
 Route::resource('bulletin-boards/{bulletinBoard}/posts', PostController::class)->names('posts');
 
+Route::view('/register/success', 'auth.register-success')->name('register.success');
 
-Route::get('/register/success', function ()
-{
-    return view('auth.register-success');
-})->name('register.success');
 
 
 

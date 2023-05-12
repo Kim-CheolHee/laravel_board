@@ -112,7 +112,7 @@ class RegisterController extends Controller
         return redirect()->route('register.success')->with
         ([
             'registered_user_name' => $user->name,
-            'registered_user_photo' => $photoPath ? str_replace('public/', '', $photoPath) : null,
+            'registered_user_photo' => $photoPath ? str_replace('public/', 'storage/', $photoPath) : null,
         ]);
     }
 

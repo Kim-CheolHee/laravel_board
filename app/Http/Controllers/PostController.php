@@ -27,7 +27,7 @@ class PostController extends Controller
     public function index(Request $request, BulletinBoard $bulletinBoard)
     {
         $page = $request->query('page', 1);
-        $posts = $bulletinBoard->posts()->paginate(10, ['*'], 'page', $page);
+        $posts = $bulletinBoard->posts()->orderBy('published_at', 'desc')->paginate(10, ['*'], 'page', $page);
         return view('posts.index', compact('bulletinBoard', 'posts'));
     }
 
@@ -55,20 +55,27 @@ class PostController extends Controller
             'attachment' => 'file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
         ]);
 
-        $post = new Post([
+        //$post = new Post([
+        $post = $bulletinBoard->posts()->create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'user_id' => auth()->user()->id,
+            'published_at' => now(),
         ]);
 
         if ($request->hasFile('attachment')) {
             $attachment = $request->file('attachment');
             $attachmentName = time() . '-' . $attachment->getClientOriginalName();
-            $attachment->storeAs('public/attachments', $attachmentName);
-            $post->attachment = $attachmentName;
+            $file_path = 'public/attachments';
+            $attachment->storeAs($file_path, $attachmentName);
+            //$post->attachment = $attachmentName;
+
+            $post->attachments()->create([
+                'file_path' => $attachmentName,
+            ]);
         }
 
-        $bulletinBoard->posts()->save($post);
+        //$bulletinBoard->posts()->save($post);
 
         return redirect()->route('posts.index', ['bulletinBoard' => $bulletinBoard->id])->with('success', 'Post created successfully.');
     }

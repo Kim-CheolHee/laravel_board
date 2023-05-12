@@ -8,11 +8,11 @@
           <p class="text-lg mb-4">{{ $post->content }}</p>
 
           <div class="mb-4">
-              @if ($post->attachment)
-                <span class="text-gray-600">Attachment: <a href="{{ asset('storage/attachments/' . $post->attachment) }}" target="_blank">{{ $post->attachment }}</a></span>
-              @else
-                <span class="text-gray-600">Attachment: N/A</span>
-              @endif
+                @forelse($post->attachments as $attachment)
+                    <span class="text-gray-600">Attachment: <a href="{{ asset('storage/attachments/' . $attachment->file_path) }}" target="_blank">{{ $attachment->file_path }}</a></span>
+                @empty
+                    <span class="text-gray-600">Attachment: N/A</span>
+                @endforelse
             <br>
               @if ($post->published_at)
                 <span class="text-gray-600">Published on: {{ \Carbon\Carbon::parse($post->published_at)->format('M d, Y') }}</span>
