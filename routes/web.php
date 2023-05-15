@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BulletinBoardController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 
 /*
@@ -35,7 +36,7 @@ Route::resource('bulletin-boards/{bulletinBoard}/posts', PostController::class)-
 
 Route::view('/register/success', 'auth.register-success')->name('register.success');
 
-
+Route::post('/posts/{post}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 
 
 

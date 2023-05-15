@@ -30,9 +30,14 @@
             </div>
 
             <div class="mb-4 border border-black p-4">
+                <label for="attachments" class="block text-gray-700 text-sm font-bold mb-2">Attachments (optional):</label>
+                <input type="file" name="attachments[]" id="attachments" multiple class="shadow appearance focus: shadow-outline">
+            </div>
+
+            {{-- <div class="mb-4 border border-black p-4">
                 <label for="attachment" class="block text-gray-700 text-sm font-bold mb-2">Attachment (optional):</label>
                 <input type="file" name="attachment" id="attachment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
+            </div> --}}
 
             <div class="mb-4">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>

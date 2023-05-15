@@ -13,7 +13,7 @@ class Post extends Model
         'title',
         'content',
         'user_id',
-        'attachment',
+        // 'attachment',
         'published_at',
     ];
 
@@ -30,6 +30,12 @@ class Post extends Model
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
     public function bulletinBoard()
     {

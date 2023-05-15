@@ -55,4 +55,9 @@ class User extends Authenticatable implements AuthenticatableContract
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

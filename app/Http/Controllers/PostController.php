@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BulletinBoard;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -52,10 +53,9 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'attachment' => 'file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
+            'attachments.*' => 'file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
         ]);
 
-        //$post = new Post([
         $post = $bulletinBoard->posts()->create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
@@ -63,19 +63,16 @@ class PostController extends Controller
             'published_at' => now(),
         ]);
 
-        if ($request->hasFile('attachment')) {
-            $attachment = $request->file('attachment');
-            $attachmentName = time() . '-' . $attachment->getClientOriginalName();
-            $file_path = 'public/attachments';
-            $attachment->storeAs($file_path, $attachmentName);
-            //$post->attachment = $attachmentName;
-
-            $post->attachments()->create([
-                'file_path' => $attachmentName,
-            ]);
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $attachment) {
+                $attachmentName = time() . '-' . $attachment->getClientOriginalName();
+                $file_path = 'public/attachments';
+                $attachment->storeAs($file_path, $attachmentName);
+                $post->attachments()->create([
+                    'file_path' => $attachmentName,
+                ]);
+            }
         }
-
-        //$bulletinBoard->posts()->save($post);
 
         return redirect()->route('posts.index', ['bulletinBoard' => $bulletinBoard->id])->with('success', 'Post created successfully.');
     }
@@ -89,8 +86,13 @@ class PostController extends Controller
     public function show(Request $request, $bulletinBoardId, $postId)
     {
         $post = Post::findOrFail($postId);
+
+        $attachments = $post->attachments->map(function ($attachment) {
+            return $attachment->file_path;
+        });
+
         $currentPage = $request->query('page', 1);
-        return view('posts.show', compact('post', 'currentPage'));
+        return view('posts.show', compact('post', 'currentPage', 'attachments'));
     }
 
     /**
@@ -101,7 +103,8 @@ class PostController extends Controller
      */
     public function edit(BulletinBoard $bulletinBoard, Post $post)
     {
-        return view('posts.edit', compact('bulletinBoard', 'post'));
+        $attachments = $post->attachments;
+        return view('posts.edit', compact('bulletinBoard', 'post', 'attachments'));
     }
 
     /**
@@ -116,11 +119,35 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
+            'attachments.*' => 'sometimes|file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
         ]);
 
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->save();
+
+        // 첨부파일 수정
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $attachment) {
+                $attachmentName = time() . '-' . $attachment->getClientOriginalName();
+                $file_path = 'public/attachments';
+                $attachment->storeAs($file_path, $attachmentName);
+                $post->attachments()->create([
+                    'file_path' => $attachmentName,
+                ]);
+            }
+        }
+
+        // 첨부파일 삭제
+        if ($request->input('deleted_attachments')) {
+            foreach ($request->input('deleted_attachments') as $id) {
+                $attachment = $post->attachments()->find($id);
+                if ($attachment) {
+                    Storage::delete('public/attachments/' . $attachment->file_path); // storage에서 삭제
+                    $attachment->delete(); // database에서 행 삭제
+                }
+            }
+        }
 
         return redirect()->route('posts.show', ['bulletinBoard' => $bulletinBoard->id, 'post' => $post->id])
             ->with('success', 'Post updated successfully.');
