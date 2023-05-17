@@ -32,11 +32,15 @@ Route::resource('users', UserController::class)->names('users');
 
 Route::resource('bulletin-board', BulletinBoardController::class)->names('bulletin-board');
 
+Route::resource('bulletin-boards/{bulletinBoard}/posts/{post}/comments', CommentController::class)->names('comments');
+
 Route::resource('bulletin-boards/{bulletinBoard}/posts', PostController::class)->names('posts');
 
 Route::view('/register/success', 'auth.register-success')->name('register.success');
 
-Route::post('/posts/{post}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+
+
+
 
 
 

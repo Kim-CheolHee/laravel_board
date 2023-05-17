@@ -12,9 +12,9 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements AuthenticatableContract
 {
     use HasApiTokens, HasFactory, Notifiable;
-    protected $primaryKey = 'email';
-    protected $keyType = 'string';
-    public $incrementing = false;
+    protected $primaryKey = 'id';
+    protected $keyType = 'int';
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.

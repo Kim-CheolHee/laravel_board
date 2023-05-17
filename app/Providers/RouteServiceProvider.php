@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\BulletinBoard;
+use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -47,6 +50,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
     }
 
     /**

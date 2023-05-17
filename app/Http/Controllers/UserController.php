@@ -67,10 +67,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($email)
+    public function show(User $user)
     {
-        $email = urldecode($email);
-        $user = User::where('email', $email)->firstOrFail();
         return view('users.show', compact('user'));
     }
 
@@ -80,10 +78,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($email)
+    public function edit(User $user)
     {
-        $email = urldecode($email);
-        $user = User::where('email', $email)->firstOrFail();
         return view('users.edit', compact('user'));
     }
 
@@ -94,11 +90,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $email)
+    public function update(Request $request, User $user)
     {
-        $email = urldecode($email);
-        $user = User::where('email', $email)->firstOrFail();
-
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);

@@ -83,10 +83,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $bulletinBoardId, $postId)
+    public function show(Request $request, BulletinBoard $bulletinBoard, Post $post)
     {
-        $post = Post::findOrFail($postId);
-
         $attachments = $post->attachments->map(function ($attachment) {
             return $attachment->file_path;
         });

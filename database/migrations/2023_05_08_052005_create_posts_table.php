@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('bulletin_board_id')->constrained();
             $table->string('title');
             $table->text('content');
-            $table->string('attachment')->nullable();
+            // $table->string('attachment')->nullable();
             $table->datetime('published_at')->nullable();
             $table->timestamps();
         });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BulletinBoard;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,17 +15,56 @@ class CommentController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Request $request, Post $post)
+    public function store(Request $request)
     {
+        $request->validate([
+            'content' => 'required',
+            'post_id' => 'required',
+        ]);
+
+        $comment = new Comment();
+        $comment->content = $request->content;
+        $comment->post_id = $request->post_id;
+        $comment->user_id = auth()->id(); // user_id를 현재 인증된 사용자의 id로 설정
+        $comment->save();
+
+        return redirect()->back();
+    }
+
+    public function edit(Comment $comment)
+    {
+        // 인증된 사용자가 댓글 작성자인지 확인
+        if (auth()->id() !== $comment->user_id) {
+            return redirect()->back()->with('error', '댓글 수정 권한이 없습니다.');
+        }
+        return view('comments.edit', compact('comment'));
+    }
+
+    public function update(Request $request, BulletinBoard $bulletinBoard, Post $post, Comment $comment)
+    {
+        // 인증된 사용자가 댓글 작성자인지 확인
+        if (auth()->id() !== $comment->user_id) {
+           return redirect()->back()->with('error', '댓글 수정 권한이 없습니다.');
+        }
+
         $request->validate([
             'content' => 'required',
         ]);
 
-        $post->comments()->create([
-            'user_id' => auth()->user()->id,
-            'content' => $request->input('content'),
-        ]);
+        $comment->content = $request->content;
+        $comment->save();
 
-        return back()->with('success', 'Comment posted.');
+        return redirect()->route('posts.show', ['bulletinBoard' => $comment->post->bulletin_board_id, 'post' => $comment->post_id]);
+    }
+
+    public function destroy(Comment $comment)
+    {
+        // 인증된 사용자가 댓글 작성자인지 확인
+        if (auth()->id() !== $comment->user_id) {
+            return redirect()->back()->with('error', '댓글 삭제 권한이 없습니다.');
+        }
+        $comment->delete();
+
+        return redirect()->back();
     }
 }
