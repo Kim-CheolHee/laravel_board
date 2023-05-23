@@ -44,7 +44,6 @@ Route::resource('bulletinBoards.posts', PostController::class)->names('posts');
 
 Route::resource('bulletin-boards/{bulletinBoard}/posts/{post}/comments', CommentController::class)->names('comments');
 
-
 Route::view('/register/success', 'auth.register-success')->name('register.success');
 
 
