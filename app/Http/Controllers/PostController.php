@@ -90,8 +90,9 @@ class PostController extends Controller
         });
 
         $currentPage = $request->query('page', 1);
-        return view('posts.show', compact('post', 'currentPage', 'attachments'));
+        return view('posts.show', compact('post', 'currentPage', 'attachments', 'bulletinBoard'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
