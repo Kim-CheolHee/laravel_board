@@ -19,6 +19,8 @@ use App\Http\Controllers\PostController;
 |
 */
 
+// git test
+
 Route::get('/', function ()
 {
     return view('welcome');
