@@ -64,6 +64,7 @@
                         <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mr-2 mt-2">저장</button>
                         <button type="button" class="bg-red-400 text-white py-2 px-4 rounded hover:bg-red-600 mr-2 mt-2" onclick="deleteComment({{ $comment->id }})">댓글 삭제</button>
                     </form>
+
                 @endif
             </div>
         @endforeach
@@ -72,6 +73,7 @@
 </div>
 @endsection
 
+@push('scripts')
 <script>
     function deletePost(postId)
     {
@@ -79,7 +81,7 @@
         {
             const form = document. createElement('form');
             form.method = 'POST';
-            form.action = `/bulletin-boards/{{ $post->bulletin_board_id }}/posts/${postId}`;
+            form.action = `/bulletin-board/{{ $post->bulletin_board_id }}/posts/${postId}`;
             form.style.display = 'none';
 
             const csrfInput = document. createElement('input');
@@ -105,7 +107,7 @@
         {
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = `/bulletin-boards/{{ $post->bulletin_board_id }}/posts/{{ $post->id }}/comments/${commentId}`;
+            form.action = `/bulletin-board/{{ $post->bulletin_board_id }}/posts/{{ $post->id }}/comments/${commentId}`;
             form.style.display = 'none';
 
             const csrfInput = document.createElement('input');
@@ -148,3 +150,4 @@
         }
     }
 </script>
+@endpush

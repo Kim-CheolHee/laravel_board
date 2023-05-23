@@ -44,7 +44,7 @@ class CommentController extends Controller
     {
         // 인증된 사용자가 댓글 작성자인지 확인
         if (auth()->id() !== $comment->user_id) {
-           return redirect()->back()->with('error', '댓글 수정 권한이 없습니다.');
+            return redirect()->back()->with('error', '댓글 수정 권한이 없습니다.');
         }
 
         $request->validate([
@@ -54,10 +54,10 @@ class CommentController extends Controller
         $comment->content = $request->content;
         $comment->save();
 
-        return redirect()->route('posts.show', ['bulletinBoard' => $comment->post->bulletin_board_id, 'post' => $comment->post_id]);
+        return redirect()->route('posts.show', ['bulletinBoard' => $bulletinBoard->id, 'post' => $post->id]);
     }
 
-    public function destroy(Comment $comment)
+    public function destroy(BulletinBoard $bulletinBoard, Post $post, Comment $comment)
     {
         // 인증된 사용자가 댓글 작성자인지 확인
         if (auth()->id() !== $comment->user_id) {
@@ -65,6 +65,7 @@ class CommentController extends Controller
         }
         $comment->delete();
 
-        return redirect()->back();
+        return redirect()->route('posts.show', ['bulletinBoard' => $bulletinBoard->id, 'post' => $post->id])
+        ->with('성공', '댓글 삭제 성공.');
     }
 }
