@@ -19,6 +19,8 @@ use App\Http\Controllers\PostController;
 |
 */
 
+// gitlab test
+
 Route::get('/', function ()
 {
     return view('welcome');
