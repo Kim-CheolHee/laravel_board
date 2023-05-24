@@ -50,7 +50,7 @@
                          @auth
                              <a href="{{ url('/home') }}" class="text-gray-700 dark:text-gray-500">Home</a>
                              <a href="{{ route('users.show', Auth::user()) }}" class="text-gray-700 dark:text-gray-500">User Info</a>
-                             <a href="{{ route('bulletin-board.index') }}" class="text-gray-700 dark:text-gray-500">Boards</a>
+                             <a href="{{ route('bulletin-boards.index') }}" class="text-gray-700 dark:text-gray-500">Boards</a>
                              <a href="{{ route('logout') }}" class="text-gray-700 dark:text-gray-500" onclick="event.preventDefault(); document.getElementById('logout-form' ).submit();">Log out</a>
                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                  @csrf
@@ -61,7 +61,7 @@
                              @if (Route::has('register'))
                                  <a href="{{ route('register') }}" class="text-gray-700 dark:text-gray-500">Register</a>
                              @endif
-                             <a href="{{ route('bulletin-board.index') }}" class="text-gray-700 dark:text-gray-500">Boards</a>
+                             <a href="{{ route('bulletin-boards.index') }}" class="text-gray-700 dark:text-gray-500">Boards</a>
                          @endauth
                      </div>
                  @endif

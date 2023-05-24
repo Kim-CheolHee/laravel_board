@@ -81,7 +81,7 @@
         {
             const form = document. createElement('form');
             form.method = 'POST';
-            form.action = `/bulletin-board/{{ $post->bulletin_board_id }}/posts/${postId}`;
+            form.action = `/bulletin-boards/{{ $post->bulletin_board_id }}/posts/${postId}`;
             form.style.display = 'none';
 
             const csrfInput = document. createElement('input');
@@ -107,7 +107,7 @@
         {
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = `/bulletin-board/{{ $post->bulletin_board_id }}/posts/{{ $post->id }}/comments/${commentId}`;
+            form.action = `/bulletin-boards/{{ $post->bulletin_board_id }}/posts/{{ $post->id }}/comments/${commentId}`;
             form.style.display = 'none';
 
             const csrfInput = document.createElement('input');
