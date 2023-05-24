@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\V1\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,8 +24,8 @@ Route::prefix('v1')->as('api.v1.')->group(function() {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    Route::resource('users', UserController::class)->names('users');
     Route::middleware('auth:sanctum')->group(function () {
-        Route::resource('users', UserController::class)->names('users');
         Route::resource('bulletin-boards', BulletinBoardController::class)->names('bulletin-board');
         Route::resource('bulletin-boards/{bulletinBoard}/posts', PostController::class)->names('posts');
         Route::resource('bulletin-boards/{bulletinBoard}/posts/{post}/comments', CommentController::class)
