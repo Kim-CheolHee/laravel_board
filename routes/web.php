@@ -18,7 +18,7 @@ use App\Http\Controllers\PostController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// commit test
 Route::get('/', function ()
 {
     return view('welcome');
