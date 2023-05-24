@@ -32,11 +32,18 @@ Route::resource('users', UserController::class)->names('users');
 
 Route::view('/register/success', 'auth.register-success')->name('register.success');
 
-Route::resource('bulletin-board', BulletinBoardController::class)->names('bulletin-board');
+Route::resource('bulletin-boards', BulletinBoardController::class)->names('bulletin-boards');
 
-Route::resource('bulletin-board/{bulletinBoard}/posts', PostController::class)->names('posts');
+Route::resource('bulletin-boards/{bulletinBoard}/posts', PostController::class)->names('posts');
 
+<<<<<<< HEAD
 Route::resource('bulletin-board/{bulletinBoard}/posts/{post}/comments', CommentController::class)
 ->except('destroy')
 ->names('comments');
 Route::delete('/bulletin-board/{bulletinBoard}/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
+=======
+Route::resource('bulletin-boards/{bulletinBoard}/posts/{post}/comments', CommentController::class)
+    ->except('destroy')
+    ->names('comments');
+Route::delete('bulletin-boards/{bulletinBoard}/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
+>>>>>>> 3b47245b3b27549dbdf9ef71dcd56ebc2251a999

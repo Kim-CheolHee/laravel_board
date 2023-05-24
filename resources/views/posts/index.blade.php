@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto p-4">
     <h1 class="text-center text-4xl font-bold mb-6 cursor-pointer">
-        <a href="{{ route('bulletin-board.index') }}" class="text-black hover:text-blue-600">
+        <a href="{{ route('bulletin-boards.index') }}" class="text-black hover:text-blue-600">
             {{ $bulletinBoard->subject }}
         </a>
     </h1>
