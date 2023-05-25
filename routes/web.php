@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BulletinBoardController;
 use App\Http\Controllers\CommentController;
@@ -26,7 +26,12 @@ Route::get('/', function ()
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [WelcomeController::class, 'index'])->name('home');
+
+Route::get('/laravel', function ()
+{
+    return view('laravel');
+});
 
 Route::resource('users', UserController::class)->names('users');
 
