@@ -20,6 +20,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet"> --}}
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -41,6 +42,7 @@
                                 @csrf
                             </form>
                         @else
+                            <a href="{{ url('/home') }}" class="text-2xl text-gray-700 dark:text-gray-500">Home</a>
                             <a href="{{ route('login') }}" class="text-2xl text-gray-700 dark:text-gray-500">Log in</a>
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}" class="text-2xl text-gray-700 dark:text-gray-500">Register</a>
