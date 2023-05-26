@@ -32,7 +32,7 @@
                             <div class="flex items-center">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a x-data="{ message: 'I ❤️ Alpine' }" x-text="message" href="#" class="underline text-gray-900 dark:text-white"></a>
+                                    <a x-data="{ message: 'I ❤️ Alpine' }" x-text="message" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
                                 </div>
                             </div>
 
@@ -42,13 +42,82 @@
                                     <span x-text="count" ></span>
                                 </div>
                             </div>
+
+                            <div class="ml-12">
+                                <button x-data="{}" x-on:click="console.log('clicked')">콘솔 clicked 출력</button>
+                                <button x-data="{}" @click="alert('Hello World!')">Say Hi</button>
+                                <button x-data="{}" @click="alert('I\'ve been clicked!')">Click Me</button>
+                            </div>
+                            <div class="ml-12 border-2 border-black">
+                                <input @keyup.enter="엔터">
+                            </div>
+                            <div class="ml-12">
+                                <button x-data="{}" @click="$event.target.remove()">Remove Me</button>
+                            </div>
+                            <div class="ml-12">
+                                <div x-data="{ foo: 'bar' }">
+                                    <span x-text="foo"><!-- Will output: "bar" --></span>
+
+                                    <div x-data="{ bar: 'baz' }">
+                                        <span x-text="foo"><!-- Will output: "bar" --></span>
+
+                                        <div x-data="{ foo: 'bob' }">
+                                            <span x-text="foo"><!-- Will output: "bob" --></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="{ open: false, trans() { this.open = ! this.open } }" class="ml-12">
+                                <button @click="trans()">Toggle Content</button>
+
+                                <div x-show="open">
+                                    Content...
+                                </div>
+                            </div>
+                            <div x-data="{ open: false, get isOpen() { return this.open }, trans() { this.open = ! this.open } }" class="ml-12">
+                                <button @click="trans()">Toggle Content</button>
+
+                                <div x-show="isOpen">
+                                    Content...
+                                </div>
+                            </div>
+                            <div x-data="{ open: true }" class="ml-12">
+                                <button @click="open = false" x-show="open">숨김버튼</button>
+                            </div>
+                            <button x-data="{ open: true }" @click="open = false" x-show="open" class="ml-12">숨김버튼 단일</button>
+                            <div x-data="dropdown" class="ml-12">
+                                <button @click="toggle">선택 버튼</button>
+                                <div x-show="open">
+                                    Content...,,,
+                                </div>
+                            </div>
+                            <script>
+                                document.addEventListener('alpine:init', () => {
+                                    Alpine.data('dropdown', () => ({
+                                        open: false,
+                                        toggle(){
+                                            this.open = !this.open
+                                        },
+                                        init() {
+                                            console.log('I will get evaluated when initializing each "dropdown" component.')
+                                        },
+                                    }))
+                                })
+                            </script>
+                            <div x-init="console.log('I\'m being initialized!')"></div>
+                            <div x-data>
+                                <span x-init="console.log('I can initialize')"></span>
+                            </div>
+                            <span x-init="console.log('I can initialize too')"></span>
+                            <div x-data="{ init(){ console.log('I am called automatically')} }"></div>
+
                         </div>
 
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                             <div class="flex items-center">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a x-data="{ message1: 'Alpine' }" x-text="message1" href="#" class="underline text-gray-900 dark:text-white"></a>
+                                    <a x-data="{ message1: 'Alpine' }" x-text="message1" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
                                 </div>
                             </div>
 
@@ -65,11 +134,11 @@
                                             )
                                         }
                                     }"
+                                    x-init="$watch('search', value => console.log('search changed:', value))"
                                 >
                                     <input x-model="search" class="border-2 border-black mb-2" placeholder="검색...">
                                     <input class="border-2 border-black">
-                                    <input class="border-2 border-orange-600">
-                                    <input x-model="search" class="custom-border mb-2" placeholder="Search...">
+                                    <input x-model="search" class="border-2 border-orange-600">
 
                                     <ul>
                                         <template x-for="item in filteredItems" :key="item">
@@ -78,7 +147,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div x-data="{ open: false }">
+                            <div x-data="{ open: false }" class="ml-12">
                                 <button @click="open = ! open">Expand</button>
 
                                 <template x-if="open">
@@ -87,7 +156,7 @@
                                     </div>
                                 </template>
                             </div>
-                            <div x-data="{ open: false }">
+                            <div x-data="{ open: false }" class="ml-12">
                                 <button @click="open = ! open">Expands</button>
 
                                 <div x-show="open" x-transition.duration.500ms>
@@ -100,6 +169,16 @@
                             <div class="ml-12">
                                 <button x-data @click="alert('I\'ve been clicked!')">Click Me</button>
                             </div>
+                            <div class="ml-12" @foo="console.log('foo was dispatched')">
+                                <button @click="$dispatch('foo')">foo</button>
+                            </div>
+                            <div x-data @foo.window="console.log('foo was dispatched')" class="ml-12">window</div>
+                            <div class="ml-12" @foo="console.log('foo was dispatched')">
+                                <button x-init="console.log('Im initing')">Im initing</button>
+                            </div>
+                            <script>
+                                console.log('log test');
+                            </script>
                         </div>
 
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700">
@@ -113,19 +192,22 @@
                                 <span x-text="1 + 2"></span>
                             </div>
 
-                            <button
-                                x-data="{ red: false }"
-                                x-bind:class="red ? 'bg-red-200' : ''"
-                                @click="red = ! red"
-                            >
-                                Toggle Red
-                            </button>
-                            <div x-data="{ statuses: ['open', 'closed', 'archived'] }">
+                            <div class="ml-12">
+                                <button
+                                    x-data="{ red: false }"
+                                    x-bind:class="red ? 'bg-red-200' : ''"
+                                    @click="red = ! red"
+                                    class="border-2 border-black"
+                                >
+                                    빨간색 전환 버튼
+                                </button>
+                            </div>
+                            <div x-data="{ statuses: ['open', 'closed', 'archived'] }" class="ml-12">
                                 <template x-for="status in statuses">
                                     <div x-text="status"></div>
                                 </template>
                             </div>
-                            <div x-data="{ title: '<h1>Start Here</h1>' }">
+                            <div x-data="{ title: '<h1>Start Here</h1>' }" class="ml-12">
                                 <div x-html="title"></div>
                             </div>
                         </div>
@@ -175,3 +257,9 @@
     </body>
 
 @endsection
+
+@push('script')
+<script>
+
+</script>
+@endpush
