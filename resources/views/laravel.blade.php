@@ -26,7 +26,6 @@
                     <div class="grid grid-cols-1 md:grid-cols-2">
 {{-- Div Left Top --}}
                         <div class="p-6">
-
                             <div class="flex items-center">
                                 <div class="ml-4 text-lg leading-7 font-semibold">
                                     <a x-data="{ message: 'I ❤️ Alpine' }" x-text="message" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
@@ -159,7 +158,6 @@
                         </div>
 {{-- Div Right Top --}}
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-
                             <div class="flex items-center">
                                 <div class="ml-4 text-lg leading-7 font-semibold">
                                     <a x-data="{ message1: 'Alpine 💯 💋' }" x-text="message1" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
@@ -253,7 +251,6 @@
                         </div>
 {{-- Div Left Bottom --}}
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-
                             <div class="flex items-center">
                                 <div class="ml-4 text-lg leading-7 font-semibold">
                                     <a x-data="{ message1: 'Practice! 🧑 🚄' }" x-text="message1" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
@@ -352,22 +349,48 @@
                             <span x-cloak x-show="false" class="ml-12">This will not 'blip' onto screen at any point</span>
                             <span x-cloak x-teleport="message"></span>
                             <div x-data="{ open: false }">
-                                <button x-on:click="open = !open" class="ml-12 bg-blue-400 text-white rounded-md p-2">전환 모달 버튼</button>
+                                <button x-on:click="open = !open" class="ml-12 bg-blue-400 text-white rounded-md p-2">전환 모달 버튼1</button>
                                 <template x-teleport="#here">
-                                    <div x-show="open">
-                                        Modal contents...
+                                    <div x-show="open" class="bg-blue-400 text-white">
+                                        Modal contents 텔레포트!
                                     </div>
                                 </template>
                             </div>
-                            <div id="here" class="ml-12">...x-teleport를 이용해서...</div>
+                            <div x-data="{ open: false }">
+                                <button x-on:click="open = !open" class="ml-12 bg-green-400 text-white rounded-md p-2"> 전환 모달 버튼2</button>
+                                <template x-teleport=".tele">
+                                    <div x-show="open" x-on:click="open = false" class="bg-green-400 text-white">
+                                        Modal contents 텔레포트!<br>
+                                        닫으려면 클릭하세요.
+                                    </div>
+                                </template>
+                            </div>
+                            <div x-data="{ open: false }" class="ml-12">
+                                <button x-on:click="open = !open" class="bg-red-400 text-white rounded-md p-2">중첩 전환 버튼1</button>
+                                <template x-teleport="#here">
+                                    <div x-show="open" class="bg-red-400">
+                                        중첩 텔레포트1
+                                        <div x-data="{ open: false }">
+                                            <button x-on:click="open = !open" class="bg-red-300 text-white rounded-md p-1">중첩 전환 버튼2</button>
+                                            <template x-teleport=".tele">
+                                                <div x-show="open" class="bg-red-300">
+                                                    Nested modal contents...
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div id="here" class="tele ml-12">...x-teleport를 이용해서...</div>
                             <div class="ml-12">컨텐츠 위치를 옮겨 봅시다.</div>
 
                         </div>
 {{-- Div Right Bottom --}}
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-
                             <div class="flex items-center">
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <a x-data="{ message1: 'Directives! 💠 🇩🇬' }" x-text="message1" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
+                                </div>
                             </div>
 
                             <div class="ml-12" x-data="{ number: 5 }">
@@ -396,13 +419,42 @@
                                     </template>
                                 </ul>
                             </div>
-                            <div>
+                            <div class="ml-12">
                                 <ul x-data>
                                     <template x-for="a in 5">
                                         <li x-text="a + ' 번째'"></li>
                                     </template>
                                 </ul>
                             </div>
+                            <div x-data="{ open: true }" class="ml-12">
+                                <template x-if="open">
+                                    <div>X_IF 컨텐츠</div>
+                                </template>
+                            </div>
+                            <div x-id="['text-input']" class="ml-12">
+                                <label :for="$id('text-input')">Username</label>
+                                <input type="text" :id="$id('text-input')" class="border-2 border-black">
+                            </div>
+
+                        </div>
+{{-- Div Bottom Left --}}
+                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                            <div class="flex items-center">
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <a x-data="{ message1: 'Magics! 🤷‍♂️🪄' }" x-text="message1" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+{{-- Div Bottom Right --}}
+                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                            <div class="flex items-center">
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <a x-data="{ message1: 'Globals! 🌐' }" x-text="message1" @click.prevent href="#" class="underline text-gray-900 dark:text-white"></a>
+                                </div>
+                            </div>
+
 
                         </div>
 
