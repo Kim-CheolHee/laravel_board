@@ -51,7 +51,7 @@
                                 <button x-data="{}" @click="$event.target.remove()">Remove Me</button>
                             </div>
                             <div class="ml-12">
-                                <div x-data="{ foo: 'bar' }">
+                                <div x-data="{ foo: 'bar' }">w
                                     <span x-text="foo"><!-- Will output: "bar" --></span>
 
                                     <div x-data="{ bar: 'baz' }">
@@ -87,19 +87,6 @@
                                     Content...,,,
                                 </div>
                             </div>
-                            <script>
-                                document.addEventListener('alpine:init', () => {
-                                    Alpine.data('dropdown', () => ({
-                                        open: false,
-                                        toggle(){
-                                            this.open = !this.open
-                                        },
-                                        init() {
-                                            console.log('I will get evaluated when initializing each "dropdown" component.')
-                                        },
-                                    }))
-                                })
-                            </script>
                             <div x-init="console.log('I\'m being initialized!')"></div>
                             <div x-data>
                                 <span x-init="console.log('I can initialize')"></span>
@@ -141,11 +128,11 @@
                             </div>
                             <div x-data="{ username: '', age: '', filltest: '기본 메시지' }" class="ml-12 text-green-600 bg-red-300">
                                 <input type="text" x-model.lazy="username" class="border-2 border-black rounded-md">
-                                <span x-show="username.length > 20">유저 이름이 너무 깁니다.</span><br>
+                                <span x-show="username.length > 20" class="text-black">유저 이름이 너무 깁니다.</span><br>
                                 <input type="text" x-model.number="age">
-                                <span x-text="typeof age"></span><br>
+                                <span x-text="typeof age" class="text-black"></span><br>
                                 <input type="text" x-model.fill="filltest">
-                                <span x-text="filltest"></span>
+                                <span x-text="filltest" class="text-black"></span>
                             </div>
                             <div x-data="{ uname: 'chkim' }" class="ml-12">
                                 <div x-ref="div" x-model="uname"></div>
@@ -343,7 +330,7 @@
                                 </div>
                             </div>
                             <div x-data="" class="ml-12">
-                                <button x-on:click="$refs.text.remove()">Remove Text</button>
+                                <button x-on:click="$refs.text && $refs.text.remove()">Remove Text</button>
                                 <span x-ref="text">Hello ✈️</span>
                             </div>
                             <span x-cloak x-show="false" class="ml-12">This will not 'blip' onto screen at any point</span>
@@ -433,7 +420,7 @@
                             </div>
                             <div x-id="['text-input']" class="ml-12">
                                 <label :for="$id('text-input')">Username</label>
-                                <input type="text" :id="$id('text-input')" class="border-2 border-black">
+                                <input type="text" :id="$id('text-input')" class="bg-citroOrange p-1" class="border-2 border-blac1 border-2 border-black">
                             </div>
 
                         </div>
@@ -445,6 +432,142 @@
                                 </div>
                             </div>
 
+                            <div x-data="">
+                                <button x-on:click="$el.innerHTML = 'Hello world!'" class="bg-citroGreen text-white rounded-md p-1">"Hello World!" 로 바꾸는 버튼</button>
+                            </div>
+
+                            <div x-data>
+                                <button @click="$refs.text1 && $refs.text1.remove()" class="bg-citroGray rounded-md p-1 mr-2">텍스트 지우기</button>
+                                <span x-ref="text1" class="underline">좋은 아침! 🌞</span>
+                            </div>
+
+                            <div x-data>
+                                <button @click="$store.darkMode.toggle()" class="bg-citroGreen-light rounded-md p-1">다크 모드로 전환 버튼1</button>
+                                <div x-bind:class="$store.darkMode.on && 'bg-black'">
+                                    <h3>알파인 x-store를 활용해서 배경을 전환해보자.</h3>
+                                </div>
+                            </div>
+                            <script>
+                                document.addEventListener('alpine:init', () => {
+                                    Alpine.store('darkMode', {
+                                        on: false,
+                                        toggle() {
+                                            this.on =!this.on
+                                        }
+                                    })
+                                })
+                            </script>
+                            <button x-data @click="$store.darkMode1 =! $store.darkMode1" class="bg-orange-300 rounded-md p-1">다크 모드로 전환 버튼2</button>
+                            <div x-data :class="$store.darkMode1 && 'bg-black'">
+                                <h3>배경 전환 코드 간소화</h3>
+                            </div>
+                            <script>
+                                document.addEventListener('alpine:init', () => {
+                                    Alpine.store('darkMode1', false)
+                                })
+                            </script>
+
+                            <div x-data="{ open: false }" x-init="$watch('open', value => console.log(value))">
+                                <button @click="open =! open" class="border-2 border-black rounded p-1">watch 전환 버튼1</button>
+                            </div>
+                            <div x-data="{ aaa: { bbb: 'ccc', eee: 'fff' }}" x-init="$watch('aaa.eee', value => console.log(value))">
+                                <button x-on:click="aaa.eee = 'hhh'" class="border-2 border-black rounded p-1">watch 전환 버튼2</button>
+                            </div>
+                            <div x-data="{ open: false }" x-init="$watch('open', (a, b) => console.log(a, b))">
+                                <button @click="open =! open" class="border-2 border-black rounded p-1">watch 이전 값 가져오기 1</button>
+                            </div>
+                            <div x-data="{ foo: { bar: 'baz' }}" x-init="$watch('foo', (v, ov) => console.log(v, ov))">
+                                <button x-on:click="foo.bar = 'bob'">watch 깊은 감시</button>
+                            </div>
+                            <div x-data="{ foo: { bar: 'baz' }}" x-init="$watch('foo', (value, oldValue) => console.log(value, oldValue))">
+                                <button @click="foo.bar = 'bob'">Update</button>
+                            </div>
+                            <!-- 🚫 Infinite loop -->
+                            <div x-data="{ foo: { bar: 'baz', bob: 'lob' }}" x-init="$watch('foo', value => foo.bob = foo.bar)">
+                                <button @click="foo.bar = 'bob'">Update Infinite loop</button>
+                            </div>
+
+                            <div x-data @notify1="alert('안녕 알파인!')">
+                                <button x-on:click="$dispatch('notify1')">dispatch 알림1</button>
+                            </div>
+                            <div x-data @asd="alert($event.detail.message)">
+                                <button x-on:click="$dispatch('asd', { message: '안녕 알파인!' })">dispatch 알림2</button>
+                            </div>
+                            <div x-data>
+                                <span @notify2="내용1"></span>
+                                <button @click="$dispatch('notify2')">Notify 작동안함.</button>
+                            </div>
+                            <div x-data="{ a: () => alert('dispatch 작동!')}"">
+                                <span @notify3.window="a()"></span>
+                                <button @click="$dispatch('notify3')">Notify 작동</button>
+                            </div>
+                            <!-- 🚫 Won't work -->
+                            <div x-data="{ b: '' }">
+                                <span @notify="b"></span>
+                                <button @click="$dispatch('notify')">Notify</button>
+                            </div>
+                            <!-- ✅ Will work (because of .window) -->
+                            <div x-data="{ c: '' }">
+                                <span @notify.window="c"></span>
+                                <button @click="$dispatch('notify')">Notify</button>
+                            </div>
+                            <div x-data="{ title: 'Hello' }" @titledis.window="title = $event.detail">
+                                <h1 x-text="title"></h1>
+                            </div>
+                            <div x-data>
+                                <button @click="$dispatch('titledis', '안녕!🍎')" class="bg-blue-300 rounded p-1">다른 컴포넌트로 dispatch</button>
+                            </div>
+                            <div x-data="{ title: 'Banana🍌', check: true }">
+                                <span x-model="title">
+                                    <button @click="$dispatch('input', 'Monkey🐒')" class="bg-red-300 rounded p-1">x-model로 dispatch</button>
+                                    <button @click="check =! check; title = check ? 'Banana🍌' : 'Monkey🐒'" class="bg-red-300 rounded p-1">x-model로 dispatch toggle</button>
+                                </span>
+                                <h3 x-text="title"></h3>
+                            </div>
+                            <div x-data="{ vari: 'hahaha🤭' }">
+                                {{-- <button @click="vari = 'hohoho🍯'; $nextTick(() => { console.log($el.innerText) });" x-text="vari"></button> --}}
+                                <button @click="vari = 'hohoho🍯'; console.log($el.innerText);" x-text="vari"></button>
+                            </div>
+                            <div x-data="{ title: '안녕!🌺' }">
+                                <button @click="tite = '잘가~🐑'; await $nextTick(); console.log($el.innerText)" x-text="title"></button>
+                            </div>
+                            <div x-data="{ title: 'Hello' }">
+                                <button
+                                    @click="
+                                        title = 'Hello World!';
+                                        await $nextTick();
+                                        console.log($el.innerText);
+                                    "
+                                    x-text="title"
+                                ></button>
+                            </div>
+
+                            <div x-data data-message="Hello World!">
+                                <button @click="alert($root.dataset.message)" class="border-2 border-black bg-purple-300 p-1">root Say Hi</button>
+                            </div>
+
+                            <div x-data="{ greeting: 'hello' }">
+                                <div x-data="{ name: 'mica' }">
+                                    <button @click="sayhi($data)" class="border-2 border-red-500 bg-yellow-300 p-1">인사드립니다!</button>
+                                </div>
+                            </div>
+                            <div x-data="{ greeting: 'hello', name: 'mica', sayhi: function() { alert(this.greeting + ' ' + this.name + '!') } }">
+                                <button @click="sayhi()" class="border-2 border-red-500 bg-yellow-300 p-1">Greetings!</button>
+                            </div>
+
+                            <div x-id="['text-input']" }">
+                                <label :for="$id('text-input')"></label>
+                                <input type="text" :id="$id('text-input')" class="bg-citroOrange p-1 border-2 border-black" placeholder="$id Practice... 📚">
+                            </div>
+                            <div x-id="['text-input']" }">
+                                <label :for="$id('text-input')"></label>
+                                <input type="text" :id="$id('text-input')" class="bg-citroOrange p-1 border-2 border-black" placeholder="$id Practice... 📚">
+                            </div>
+                            <ul x-id="['list-item']" :aria-activdescendant="$id('list-item', activeItem.id)">
+                                <template x-for="item in items" :key="item.id">
+                                    <li :id="$id('list-item', item.id)">...</li>
+                                </template>
+                            </ul>
 
                         </div>
 {{-- Div Bottom Right --}}
@@ -455,6 +578,122 @@
                                 </div>
                             </div>
 
+                            <div x-data="dropdown">
+                                <button @click="toggle" class="border-2 border-black bg-gray-200 p-1">토글 테스트 버튼</button>
+                                <div x-show="open">짜잔</div>
+                            </div>
+
+                            <div x-data" class="mt-4">
+                                <h3>Mask 플러그인</h3>
+                                <input x-mask="9999/99/99" placeholder="YYYY/MM/DD">
+                                <input x-mask:dynamic="
+                                    $input.startsWith('34') || $input.startsWith('37')
+                                    ? '9999 999999 99999' : '9999 9999 9999 9999'"
+                                    class="border-2 border-black"
+                                    placeholder="카드번호를 입력하세요."
+                                >
+                                <input x-mask:dynamic="creditCardMask" class="border-2 border-black" placeholder="카드번호를 입력하세요. (함수)">
+                                <input x-mask:dynamic="$money($input)" class="border-2 border-black bg-gray-200" placeholder="0,000">
+                                <input x-mask:dynamic="$money($input, '.', ' ')" class="border-2 border-black bg-gray-200" placeholder="0,000">
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>Intersect 플러그인</h3>
+                                <div x-data="{ open: false }" x-intersect="open = true">
+                                    <div x-show="open" x-transition.delay.2000ms class="bg-red-200">
+                                        Intersect 짜잔~~ ✋
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>Focus 플러그인</h3>
+                                <div x-data="{ open: false }">
+                                    <button @click="open = true" class="border-2 border-black p-1">다이얼로그 열기(열게되면 Tap 기능이 Focus 된다.)</button>
+                                    <span x-show="open" x-trap="open">
+                                        <input type="text" placeholder="Some input...">
+                                        <input type="text" placeholder="Some Other input..."><br>
+                                        <button @click="open = false">다이얼로그 닫기</button>
+
+                                        <div x-data="{ open: false }">
+                                            <button @click="open = true" class="border-2 border-black p-1">중첩 다이얼로그 열기(열게되면 스크롤기능이 고정된다.)</button>
+                                            <span x-show="open" x-trap.noscroll="open">
+                                                <input type="text" placeholder="Some input...">
+                                                <input type="text" placeholder="Some Other input..."><br>
+                                                <button @click="open = false">중첩 다이얼로그 닫기</button>
+                                            </span>
+                                        </div>
+
+                                    </span>
+                                </div>
+
+                                <div x-data="{ open: false }" x-trap.noreturn="open">
+                                    <input type="search" placeholder="검색하기">
+                                    <div x-show="open">
+                                        검색결과...
+                                        <button @click="open = false">닫기</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>x-collapse 플러그인</h3>
+                                <div x-data="{ open: false }">
+                                    <button @click="open =! open">전환 버튼</button>
+                                    {{-- <p x-show="open" x-collapse class="bg-yellow-200 rounded p-1"> --}}
+                                    <p x-show="open" x-collapse.duration.1000ms.min.40px class="bg-yellow-200 rounded p-1">
+                                    {{-- <p x-show="open" x-collapse.min.40px class="bg-yellow-200 rounded p-1"> --}}
+                                        Reprehenderit eu excepteur ullamco esse cillum reprehenderit exercitation labore non. Dolore dolore ea dolore veniam sint in sint ex Lorem ipsum.
+                                        Sint laborum deserunt deserunt amet voluptate cillum deserunt. Amet nisi pariatur sit ut id. Ipsum est minim est commodo id dolor sint id quis sint Lorem.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>Morph 플러그인</h3>
+                                <div id="mordiv" x-data="{ message: '바꾸고 싶다면 버튼을 눌러!' }">
+                                    <input type="text" x-model="message">
+                                    <span x-text="message"></span>
+                                </div>
+                                <button id="morbtn">Morph 동작 버튼</button>
+                            </div>
+                            <script>
+                                document.querySelector('#morbtn').addEventListener('click', () => {
+                                    let el = document.querySelector('#mordiv')
+                                    Alpine.morph(el, `
+                                    <div x-data="{ message: '바꾸고 싶다면 버튼을 눌러!' }">
+                                        <h2>See how new elements have been added</h2>
+
+                                        <input type="text" x-model="message">
+                                        <span x-text="message"></span>
+
+                                        <h2>but the state of this component hasn't changed? Magical.</h2>
+                                    </div>
+                                    `)
+                                })
+                            </script>
+
+                            <div x-data class="mt-4">
+                                <h3>Advanced - Reactivity</h3>
+                                <button id="ba" class="border-2 border-black p-1">숫자 증가 버튼</button>
+                                Count: <span id="sp" class="bg-green-300 rounded-lg p-2"></span>
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>Advanced - Extending</h3>
+                                <div x-data>
+                                    <span x-uppercase>Hello World!</span>
+                                </div>
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>Advanced - Async</h3>
+                                <span x-text="getLabel"></span>
+                            </div>
+
+                            <div x-data class="mt-4">
+                                <h3>Advanced - CSP</h3>
+                            </div>
 
                         </div>
 
@@ -492,8 +731,54 @@
 
 @endsection
 
-@push('script')
 <script>
+    function sayhi({ greeting, name }) {
+        alert(greeting + ' ' + name + '!')
+    }
 
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dropdown', () => ({
+            open: false,
+            toggle(){
+                this.open = !this.open
+            },
+            init() {
+                console.log('I will get evaluated when initializing each "dropdown" component.')
+            },
+        }))
+    })
+
+    function creditCardMask(input){
+        return input.startsWith('34') || input.startsWith('37')
+                ? '9999 999999 99999' : '9999 9999 9999 9999'
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        let button = document.querySelector('#ba')
+        let span = document.querySelector('#sp')
+        let data = Alpine.reactive({ count: 1 })
+        Alpine.effect(() => {
+            span.textContent = data.count
+        })
+        button.addEventListener('click', () => {
+            data.count = data.count + 1
+        })
+    });
+
+    // Alpine.directive('uppercase', el => {
+    //     el.textContent = el.textContent.toUpperCase()
+    // })
+
+    function getLabel() {
+        return 'Hello World!'
+    }
+    // async function getLabel() {
+    //     let response = await fetch('/api/label')
+
+    //     return await response.text()
+    // }
 </script>
+
+@push('script')
+
 @endpush
