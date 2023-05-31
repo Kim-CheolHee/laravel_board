@@ -50,7 +50,7 @@
                             <div class="ml-12">
                                 <button x-data="{}" @click="$event.target.remove()">Remove Me</button>
                             </div>
-                            <div class="ml-12">
+                            <div x- class="ml-12">
                                 <div x-data="{ foo: 'bar' }">
                                     <span x-text="foo"><!-- Will output: "bar" --></span>
 
