@@ -695,6 +695,8 @@
                                 <h3>Advanced - CSP</h3>
                             </div>
 
+                            <div></div>
+
                         </div>
 
                     </div>
