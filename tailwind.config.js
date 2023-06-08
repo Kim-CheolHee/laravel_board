@@ -1,6 +1,6 @@
 module.exports = {
     // prefix: 'tw-',
-    content: ['./storage/framework/views/*.php', './resources/views/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
+    content: ['./storage/framework/views/*.php', './resources/views/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue', './resources/views/**/*.html'],
     darkMode: 'media',
     theme: {
         extend: {
