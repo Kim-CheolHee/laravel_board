@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tailwindcss</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #u_skip {
+            position: relative;
+            z-index: 3000;
+        }
+
+        #u_skip a {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 138px;
+            background: #333;
+            text-align: center;
+        }
+
+        #u_skip a:focus {
+            top: 0px;
+            border: 2px solid #4ec53d;
+        }
+
+        #u_skip span {
+            display: inline-block;
+            padding: 2px 6px 0 0;
+            font-size: 13px;
+            line-height: 26px;
+            color: #fff;
+            letter-spacing: -1px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="sr-only">김철희 이력서</h1>
+    <div id="u_skip">
+        <a href="#details">
+            <span>Details 바로가기</span>
+        </a>
+        <a href="#profile">
+            <span>Profile 바로가기</span>
+        </a>
+        <a href="#projectHistory">
+            <span>Project History 바로가기</span>
+        </a>
+        <a href="#degree">
+            <span>Degree 바로가기</span>
+        </a>
+    </div>
+
+    <div class="container lg:p-20 p-8 space-y-4">
+        <div class="lg:flex">
+            <div class="lg:w-1/4">
+                <img src="/storage/app/public/photos/profile.jpg" alt="김철희 증명사진" class="rounded-full w-48 h-48 lg:w-48 h-48">
+            </div>
+            <div class="lg:w-3/4">
+                <div class="text-5xl lg:text-7xl">cheolhee
+                    <span class="text-[#3EAF0E]">.kim</span>
+                </div>
+                <div class="mt-6 text-gray-400 font-bold">
+                    Developer, Computer Scientist
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:flex">
+            <div class="lg:w-1/4 flex-col space-y-8 mr-10">
+                <div id="details" class="text-2xl text-[#3EAF0E] font-bold">
+                    <span class="inline-block w-8 h-8 bg-[#3EAF0E] text-white rounded text-center">
+                        1
+                    </span>
+                    Details
+                </div>
+                <div class="ml-10">
+                    <div class="text-xl">Github</div>
+                    <a class="text-gray-400 inline-block" href="https://github.com/Kim-CheolHee">github.com/Kim-CheolHee</a>
+                </div>
+                <div class="ml-10">
+                    <div class="text-xl">Pick Project</div>
+                    <ul class="pl-10 list-disc space-y-1">
+                        <li><a href="#none" class="text-gray-400">Java Swing Project</a></li>
+                        <li><a href="#none" class="text-gray-400">Smart Aquarium Monitoring System</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-1 ml-10">
+                    <div class="text-xl">Homepage And Service</div>
+                    <p><a class="text-gray-400 inline-block" href="https://blog.naver.com/windowlife">네이버 블로그</a></p>
+                    <p><a class="text-gray-400 inline-block" href="https://www.youtube.com/@koreaman4465">Youtube</a></p>
+                </div>
+                <div class="ml-10">
+                    <div class="text-xl">Skill</div>
+                    <ul class="list-disc pl-10 space-y-1">
+                        <li>1bar-Project 9개 이하</li>
+                        <li>2bar-Project 10개 이상</li>
+                        <li>3bar-즉시 투입 가능</li>
+                    </ul>
+                    <div class="flex gap-2 mt-2">
+                        <div class="w1/6">Laravel</div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <div class="w1/6">Spring</div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <div class="w1/6">Vue.js</div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <div class="w1/6">Alpine.js</div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <div class="w1/6">Tailwind CSS</div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                        <div class="w-1/6 bg-[#3EAF0E] h-2 mt-2 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-3/4 lg:m-0 mt-6">
+                <div>
+                    <div id="profile" class="text-2xl text-[#3EAF0E] font-bold">
+                        <span class="inline-block w-8 h-8 bg-[#3EAF0E] text-white rounded text-center">
+                            2
+                        </span>
+                        Profile
+                    </div>
+                    <div class="mt-8 ml-10 space-y-2">
+                        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur laboriosam error placeat excepturi repudiandae consequatur temporibus soluta assumenda aspernatur, voluptate, nemo amet eveniet vero. Voluptatem perferendis ratione officiis molestias esse.</div>
+                        <div>Et aperiam officia tempore error dolore eaque provident quibusdam atque quisquam! Nesciunt, a delectus. Explicabo reiciendis ut illo, aut dignissimos iusto amet itaque doloremque magni, odit odio quas vel modi.</div>
+                    </div>
+                </div>
+                <div id="projectHistory" class="mt-8 flex-col space-y-8">
+                    <div class="text-2xl text-[#3EAF0E] font-bold">
+                        <span class="inline-block w-8 h-8 bg-[#3EAF0E] text-white rounded text-center">
+                            3
+                        </span>
+                        Project History
+                    </div>
+                    <div class="flex-col space-y-2 ml-10">
+                        <div class="border-l-4 border-[#3EAF0E] pl-2 text-xl">
+                            Java Swing Project
+                            <span class="text-sm text-gray-600">2022.10 - 11</span>
+                        </div>
+                        <div>
+                            Used Skill:
+                            <span class="text-blue-500">#Java</span>
+                        </div>
+                        <div>
+                            Project Link:
+                            <a class="text-gray-400" href="https://github.com/Kim-CheolHee/Java_Swing_Project">GitHub</a>
+                        </div>
+                        <div>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat aut itaque deleniti dignissimos maxime a possimus voluptate sint nobis, provident necessitatibus expedita, placeat officiis autem, temporibus eum ad facilis soluta.
+                        </div>
+                        <div>
+                            Voluptatem animi excepturi optio dolore voluptatibus illo, quibusdam amet mollitia. Inventore necessitatibus consequuntur quae laboriosam quas quasi architecto corporis nam voluptates. Consequatur, accusamus quibusdam eius dolorem obcaecati molestias distinctio a
+                        </div>
+                    </div>
+                    <div class="flex-col space-y-2 ml-10">
+                        <div class="border-l-4 border-[#3EAF0E] pl-2 text-xl">
+                            Java Swing Project
+                            <span class="text-sm text-gray-600">2022.10 - 11</span>
+                        </div>
+                        <div>
+                            Used Skill:
+                            <span class="text-blue-500">#Java</span>
+                        </div>
+                        <div>
+                            Project Link:
+                            <a class="text-gray-400" href="https://github.com/Kim-CheolHee/Java_Swing_Project">GitHub</a>
+                        </div>
+                        <div>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat aut itaque deleniti dignissimos maxime a possimus voluptate sint nobis, provident necessitatibus expedita, placeat officiis autem, temporibus eum ad facilis soluta.
+                        </div>
+                        <div>
+                            Voluptatem animi excepturi optio dolore voluptatibus illo, quibusdam amet mollitia. Inventore necessitatibus consequuntur quae laboriosam quas quasi architecto corporis nam voluptates. Consequatur, accusamus quibusdam eius dolorem obcaecati molestias distinctio a
+                        </div>
+                    </div>
+                    <div class="flex-col space-y-2 ml-10">
+                        <div class="border-l-4 border-[#3EAF0E] pl-2 text-xl">
+                            Java Swing Project
+                            <span class="text-sm text-gray-600">2022.10 - 11</span>
+                        </div>
+                        <div>
+                            Used Skill:
+                            <span class="text-blue-500">#Java</span>
+                        </div>
+                        <div>
+                            Project Link:
+                            <a class="text-gray-400" href="https://github.com/Kim-CheolHee/Java_Swing_Project">GitHub</a>
+                        </div>
+                        <div>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat aut itaque deleniti dignissimos maxime a possimus voluptate sint nobis, provident necessitatibus expedita, placeat officiis autem, temporibus eum ad facilis soluta.
+                        </div>
+                        <div>
+                            Voluptatem animi excepturi optio dolore voluptatibus illo, quibusdam amet mollitia. Inventore necessitatibus consequuntur quae laboriosam quas quasi architecto corporis nam voluptates. Consequatur, accusamus quibusdam eius dolorem obcaecati molestias distinctio a
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+
+</body>
+</html>
