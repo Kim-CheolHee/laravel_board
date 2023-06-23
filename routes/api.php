@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostController;
+use App\Http\Controllers\BulletinBoardController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
