@@ -8,12 +8,31 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\Traits\LogsActivity;
 /**
  * @method \Laravel\Sanctum\NewAccessToken createToken(string $name, array $abilities = ['*'])
  */
 class User extends Authenticatable implements AuthenticatableContract
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity;
+
+    /**
+     * 변경 감지 항목 - 변경 시, 로그 저장
+     *
+     * @var array
+     */
+    protected static $logAttributes = [
+        'id', 'email', 'name', 'password', 'photo', 'created_at', 'updated_at',
+    ];
+
+    /**
+     * 변경 무시 항목 - 변경되어도 로그 저장하지 않음
+     *
+     * @var array
+     */
+    protected static $ignoreChangedAttributes = [
+
+    ];
     protected $primaryKey = 'id';
     protected $keyType = 'int';
     public $incrementing = true;
