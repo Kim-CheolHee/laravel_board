@@ -50,31 +50,41 @@ class PostController extends Controller
      */
     public function store(Request $request, BulletinBoard $bulletinBoard)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'attachments.*' => 'file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
-        ]);
+        try {
+            $request->validate([
+                'title' => 'required',
+                'content' => 'required',
+                'attachments.*' => 'file|mimes:jpeg,png,jpg,gif,svg,doc,docx,pdf,txt|max:2048',
+            ]);
 
-        $post = $bulletinBoard->posts()->create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'user_id' => auth()->user()->id,
-            'published_at' => now(),
-        ]);
+            $post = $bulletinBoard->posts()->create([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'user_id' => auth()->user()->id,
+                'published_at' => now(),
+            ]);
 
-        if ($request->hasFile('attachments')) {
-            foreach ($request->file('attachments') as $attachment) {
-                $attachmentName = time() . '-' . $attachment->getClientOriginalName();
-                $file_path = 'public/attachments';
-                $attachment->storeAs($file_path, $attachmentName);
-                $post->attachments()->create([
-                    'file_path' => $attachmentName,
-                ]);
+            if ($request->hasFile('attachments')) {
+                foreach ($request->file('attachments') as $attachment) {
+                    $attachmentName = time() . '-' . $attachment->getClientOriginalName();
+                    $file_path = 'public/attachments';
+                    $attachment->storeAs($file_path, $attachmentName);
+                    $post->attachments()->create([
+                        'file_path' => $attachmentName,
+                    ]);
+                }
             }
-        }
 
-        return redirect()->route('posts.index', ['bulletinBoard' => $bulletinBoard->id])->with('success', 'Post created successfully.');
+            return redirect()->route('posts.index', ['bulletinBoard' => $bulletinBoard->id])->with('success', 'Post created successfully.');
+        } catch (\Exception $exception) {
+            // 예외 기록
+            activity()
+                ->withProperties(['exception' => $exception->getMessage()])
+                ->log('포스트 작성 중 오류가 발생했습니다');
+
+            // 애플리케이션의 오류 처리 정책에 따라 예외를 처리합니다.
+            // 예를 들어 예외를 다시 발생시키거나 오류 메시지를 표시하는 뷰를 반환할 수 있습니다.
+        }
     }
 
     /**
