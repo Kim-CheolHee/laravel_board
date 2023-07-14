@@ -11,6 +11,30 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 /**
  * @OA\Info(title="board", version="0.1")
  **/
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="board Rest API",
+ *      description="board API",
+ *      @OA\Contact(
+ *          email="chkim@dtwocorp.com"
+ *      )
+ * )
+ *
+ * @OA\Server(
+ *      url="",
+ *      description=""
+ * )
+ *
+ * @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *      in="header",
+ *      name="bearerAuth",
+ *      type="http",
+ *      scheme="bearer",
+ *      bearerFormat="JWT",
+ * )
+ */
 
 class UserController extends Controller
 {
@@ -42,7 +66,10 @@ class UserController extends Controller
  *     @OA\Response(
  *         response=500,
  *         description="Server Error"
- *     )
+ *     ),
+ *     security={
+ *         {"bearerAuth": {}}
+ *     }
  * )
  */
     public function index(Request $request)

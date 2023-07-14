@@ -1,9 +1,19 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "board",
-        "version": "0.1"
+        "title": "board Rest API",
+        "description": "board API",
+        "contact": {
+            "email": "chkim@dtwocorp.com"
+        },
+        "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "",
+            "description": ""
+        }
+    ],
     "paths": {
         "/api/v1/users": {
             "get": {
@@ -41,7 +51,12 @@
                     "500": {
                         "description": "Server Error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -251,6 +266,15 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }
