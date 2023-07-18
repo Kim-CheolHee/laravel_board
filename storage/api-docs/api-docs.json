@@ -15,6 +15,426 @@
         }
     ],
     "paths": {
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "/login"
+                ],
+                "summary": "로그인",
+                "description": "로그인",
+                "operationId": "bae68d1c55329ecb6e41f48285840c8f",
+                "requestBody": {
+                    "description": "Login data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "access_token_name": {
+                                                    "type": "string",
+                                                    "example": "X-ACCESS-TOKEN"
+                                                },
+                                                "access_token": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "/logout"
+                ],
+                "summary": "로그아웃",
+                "description": "로그아웃",
+                "operationId": "c5cdd87fdbf9d0f95dede875bd023dec",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "성공"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "access_token_name": {
+                                                    "type": "string",
+                                                    "example": "X-ACCESS-TOKEN"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/bulletin-boards/{bulletin_board_id}/posts": {
+            "get": {
+                "tags": [
+                    "/boards"
+                ],
+                "summary": "게시글 리스트 가져오기",
+                "description": "특정 게시판의 게시글 리스트를 가져옵니다.",
+                "operationId": "9a46a31d5d6c7642790a54e4fa516ab4",
+                "parameters": [
+                    {
+                        "name": "bulletin_board_id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "게시글 리스트를 가져오는데 성공했습니다.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "/boards"
+                ],
+                "summary": "게시판 아이디로 게시글 생성하기",
+                "description": "게시판 아이디로 게시글을 생성합니다.",
+                "operationId": "ffed230b5ada399ae31a96601be92dfa",
+                "parameters": [
+                    {
+                        "name": "bulletin_board_id",
+                        "in": "path",
+                        "description": "Board ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "작성할 게시글의 내용을 입력하세요.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostResource"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "게시글 생성에 성공했습니다.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/bulletin-boards/{bulletin_board_id}/posts/{post_id}": {
+            "get": {
+                "tags": [
+                    "/boards"
+                ],
+                "summary": "게시판 아이디와 게시글 아이디로 게시글 가져오기",
+                "description": "제공받은 게시판 아이디와 게시글 아이디로 게시글을 가져옵니다.",
+                "operationId": "4d6263c94b9e06e5345c280f661ac1f6",
+                "parameters": [
+                    {
+                        "name": "bulletin_board_id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "게시글 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "게시글을 가져오는데 성공했습니다.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "/boards"
+                ],
+                "summary": "게시판 아이디와 게시글 아이디로 게시글 삭제하기",
+                "description": "게시판 아이디와 게시글 아이디로 게시글을 삭제합니다",
+                "operationId": "3223be738fbed408050d07776291cf94",
+                "parameters": [
+                    {
+                        "name": "bulletin_board_id",
+                        "in": "path",
+                        "description": "Board ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "게시글 삭제에 성공했습니다",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Post deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "/boards"
+                ],
+                "summary": "게시판 아이디와 게시글 아이디로 게시글 업데이트하기",
+                "description": "게시판 아이디와 게시글 아이디로 게시글을 업데이트합니다.",
+                "operationId": "640f6a69621bc529fcdf5d74842939b7",
+                "parameters": [
+                    {
+                        "name": "bulletin_board_id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "description": "게시글 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "바꿀 부분을 수정하세요.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "New Title"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "New content for the post."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "게시글 업데이트에 성공했습니다.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/users": {
             "get": {
                 "tags": [
@@ -224,7 +644,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User updated successfully",
+                        "description": "유저 정보 업데이트 성공",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -248,6 +668,54 @@
     },
     "components": {
         "schemas": {
+            "LoginResource": {
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "Created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "PostResource": {
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "bulletin_board_id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "Created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "UserResource": {
                 "properties": {
                     "Name": {

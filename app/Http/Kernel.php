@@ -63,5 +63,12 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        // jwt api 인증 체크
+        'auth.jwt' => \App\Http\Middleware\JwtVerify::class,
+        'auth.sanctum' => \App\Http\Middleware\SanctumVerify::class,
+        'auth.device' => \App\Http\Middleware\CheckDevice::class,
+        // local 환경에서만 접근 허용
+        'auth.local' => \App\Http\Middleware\SwaggerVerify::class,
+        'auth.jwt.sso' => \App\Http\Middleware\JwtSsoVerify::class,
     ];
 }

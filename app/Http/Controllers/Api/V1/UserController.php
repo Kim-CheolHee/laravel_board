@@ -214,7 +214,7 @@ class UserController extends Controller
   * ),
   * @OA\Response(
   * response=200,
-  * description="User updated successfully",
+  * description="유저 정보 업데이트 성공",
   * @OA\JsonContent(ref="#/components/schemas/UserResource")
   * ),
   * @OA\Response(

@@ -22,7 +22,7 @@ use App\Http\Controllers\CommentController;
 
 Route::prefix('v1')->as('api.v1.')->group(function() {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
     Route::resource('users', UserController::class)->except(['show', 'update', 'destroy'])->names('users');
     Route::get('users/{email}', [UserController::class, 'show'])->name('users.show');
