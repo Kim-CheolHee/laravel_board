@@ -41,6 +41,8 @@ Route::resource('bulletin-boards', BulletinBoardController::class)->names('bulle
 
 Route::resource('bulletin-boards/{bulletinBoard}/posts', PostController::class)->names('posts');
 
+Route::get('bulletin-boards/{bulletinBoard}/posts-export', [PostController::class, 'export'])->name('posts.export');
+
 Route::resource('bulletin-boards/{bulletinBoard}/posts/{post}/comments', CommentController::class)
     ->except('destroy')
     ->names('comments');

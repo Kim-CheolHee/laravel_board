@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PostsExport;
 use App\Models\BulletinBoard;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PostController extends Controller
 {
@@ -173,6 +177,13 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index', $bulletinBoard->id)->with('success', '게시글이 삭제되었습니다.');
+    }
+
+    /* Laravel-Excel */
+    public function export(BulletinBoard $bulletinBoard, Request $request)
+    {
+        Log::info("bulletinBoard: " . $bulletinBoard);
+        return Excel::download(new PostsExport($bulletinBoard->id), 'posts.xlsx');
     }
 
 }

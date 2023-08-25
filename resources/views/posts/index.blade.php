@@ -46,6 +46,7 @@
             @auth
                 <button onclick="location.href='{{ route('posts.create', ['bulletinBoard' => $bulletinBoard->id]) }}'" class="bg-green-300 text-white py- 2 px-4 rounded hover:bg-green-400">Write</button>
             @endauth
+                <button onclick="location.href='{{ route('posts.export', ['bulletinBoard' => $bulletinBoard->id], Request::all()) }}'" class="bg-blue-300 text-white py-2 px-4 rounded hover:bg-blue-400">Export to Excel</button>
         </div>
     </div>
 
