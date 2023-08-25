@@ -12,7 +12,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 /**
  * @method \Laravel\Sanctum\NewAccessToken createToken(string $name, array $abilities = ['*'])
  */
-class User extends Authenticatable implements AuthenticatableContract
+class User extends Authenticatable implements AuthenticatableContract, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, LogsActivity;
 
