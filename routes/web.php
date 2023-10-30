@@ -24,6 +24,8 @@ Route::get('/', function ()
     return view('welcome');
 });
 
+Route::view('/test', 'test');
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [WelcomeController::class, 'index'])->name('home');
