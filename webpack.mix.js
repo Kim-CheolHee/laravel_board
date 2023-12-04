@@ -12,6 +12,8 @@ const mix = require('laravel-mix')
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .copyDirectory('resources/fonts/MaterialIcons/!(*.scss)', 'public/fonts/MaterialIcons')
+    .js('resources/js/test/categories/index.js', 'public/js/test/categories')
     .vue()
     .postCss('resources/css/app.css', 'public/css',
     [
@@ -20,7 +22,6 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
     ])
 
-if (mix.inProduction())
-{
+if (mix.inProduction()) {
     mix.version()
 }

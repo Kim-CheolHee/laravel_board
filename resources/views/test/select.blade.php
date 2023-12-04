@@ -29,13 +29,13 @@
 @endsection
 
 @section('content')
-    <input type='checkbox' name='selectall' value='selectall' onclick='selectAll(this)' /> <b>Select All</b>
-    <br />
-    <input type='checkbox' name='animal' value='dog' onclick='checkSelectAll()' /> 개
-    <br />
-    <input type='checkbox' name='animal' value='cat' onclick='checkSelectAll()' /> 고양이
-    <br />
-    <input type='checkbox' name='animal' value='rabbit' onclick='checkSelectAll()' /> 토끼
-
-    <p>test</p>
+    <div>
+        <input type='checkbox' name='selectall' value='selectall' onclick='selectAll(this)' /> <b>Select All</b>
+        <br />
+        <input type='checkbox' name='animal' value='dog' onclick='checkSelectAll()' /> 개
+        <br />
+        <input type='checkbox' name='animal' value='cat' onclick='checkSelectAll()' /> 고양이
+        <br />
+        <input type='checkbox' name='animal' value='rabbit' onclick='checkSelectAll()' /> 토끼
+    </div>
 @endsection

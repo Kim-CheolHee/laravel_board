@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BulletinBoardController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Test\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,6 @@ Route::get('/', function ()
 {
     return view('welcome');
 });
-
-Route::view('/test', 'test');
 
 Auth::routes(['verify' => true]);
 
@@ -49,3 +48,16 @@ Route::resource('bulletin-boards/{bulletinBoard}/posts/{post}/comments', Comment
     ->except('destroy')
     ->names('comments');
 Route::delete('bulletin-boards/{bulletinBoard}/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
+
+Route::group([
+    'prefix' => 'test',
+    'as' => 'test.'
+], function () {
+
+    Route::get('select', [TestController::class, 'select'])
+        ->name('select');
+
+    Route::get('sortable', [TestController::class, 'sortable'])
+        ->name('sortable');
+
+});
