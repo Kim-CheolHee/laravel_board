@@ -20,7 +20,10 @@ use App\Http\Controllers\CommentController;
 |
 */
 
-Route::prefix('v1')->as('api.v1.')->group(function() {
+Route::group([
+    'prefix' => 'v1',
+    'as' => 'api.v1.'
+], function() {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 

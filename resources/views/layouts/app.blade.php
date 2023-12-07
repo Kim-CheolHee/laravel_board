@@ -1,3 +1,6 @@
+<!--
+자유롭게 연습하는 라라벨 프로젝트
+-->
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -27,8 +30,10 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @yield('styles')
 </head>
+
 <body>
     <div id="app">
         <header class="w-full bg-white dark:bg-gray-800">
@@ -62,7 +67,7 @@
             </div>
         </header>
 
-        <main class="py-4">
+        <main class="py-4" >
             @yield('content')
             @stack('scripts')
         </main>
@@ -72,4 +77,5 @@
     @yield('scripts')
 
 </body>
+
 </html>
