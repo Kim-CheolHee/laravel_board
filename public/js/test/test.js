@@ -1,0 +1,1 @@
+console.log("Test JS file loaded!"),document.addEventListener("DOMContentLoaded",(function(){var e=document.createElement("p");e.textContent="This is a test paragraph from test.js!",document.body.appendChild(e)}));

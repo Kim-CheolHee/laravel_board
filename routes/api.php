@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\EnvController;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\BulletinBoardController;
 use App\Http\Controllers\CommentController;
@@ -44,4 +45,9 @@ Route::group([
             ->names('comments');
         Route::delete('bulletin-boards/{bulletinBoard}/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     });
+
+    Route::post('env', [EnvController::class, 'index'])->name('env.index');
+    Route::post('envs', [EnvController::class, 'index'])->name('envs.index');
+    Route::post('getEnvValues', [EnvController::class, 'index'])->name('getEnvValues.index');
 });
+

@@ -10,7 +10,8 @@ Route::group([
     'as' => 'modules.',
     // 'middleware' => 'auth'
 ], function () {
-    Route::get('/', [ModuleController::class, 'index'])->name('index');
+    Route::get('/view', [ModuleController::class, 'index'])->name('index');
+    Route::get('/home', [ModuleController::class, 'home'])->name('home');
 
     // // did
     // Route::get('/did', [ControllersModuleController::class, 'index']);
@@ -48,5 +49,5 @@ Route::group([
     /**
      * 기기 화면
      */
-    Route::get('{deviceType}/{vue_page?}', [ModuleController::class, 'index'])->where('vue_page', '[\/\w\.-]*');
+    Route::get('{deviceType}/{vue_page?}', [ModuleController::class, 'moduleHome'])->where('vue_page', '[\/\w\.-]*');
 });
